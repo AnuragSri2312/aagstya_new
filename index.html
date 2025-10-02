@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agastya Medical Solutions</title>
+  <title>Agastya</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -11,122 +11,287 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
 
-  <!-- Font Awesome (for flask / microscope icons, etc.) -->
+  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
-  <!-- Your site CSS (keeps your overrides) -->
+  <!-- Your site CSS -->
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Product slider styles (paste inserted here) -->
+  <!-- Product slider styles and theme -->
   <style>
-    /* Continuous right-to-left/right-to-left slider (this version moves images from LEFT -> RIGHT) */
+    :root {
+      --primary-green: #7bbd2b;
+      --dark-green: #4a6f20;
+      --mustard-yellow: #d4af37;
+      --light-yellow: #fff8dc;
+      --neutral-light: #f9f9f9;
+      --text-dark: #2b2b2b;
+      --overlay-white: rgba(255, 255, 255, 0.75);
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1581091012184-69b34bed595d?auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      color: var(--text-dark);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-color: var(--overlay-white);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--primary-green);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      backdrop-filter: saturate(180%) blur(10px);
+      -webkit-backdrop-filter: saturate(180%) blur(10px);
+    }
+    .navbar-brand .logo {
+      height: 70px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+    }
+    .navbar-brand .logo:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 6px rgba(212,175,55,0.8));
+    }
+    .position-absolute.start-50.translate-middle-x span {
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: var(--mustard-yellow);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-link {
+      color: var(--light-yellow) !important;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: color 0.3s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--mustard-yellow) !important;
+    }
+
+    /* Hero */
+    header.bg-light {
+      background: linear-gradient(135deg, var(--primary-green) 0%, var(--mustard-yellow) 100%);
+      color: var(--light-yellow);
+      padding: 6rem 0;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.25);
+      position: relative;
+      z-index: 1;
+    }
+    header .btn-primary {
+      background-color: var(--mustard-yellow);
+      border: none;
+      font-weight: 700;
+      color: var(--dark-green);
+      transition: background-color 0.3s ease;
+    }
+    header .btn-primary:hover {
+      background-color: #c49d2d;
+      color: var(--light-yellow);
+    }
+
+    /* Section headings */
+    section h2.text-primary {
+      color: var(--dark-green);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border-bottom: 3px solid var(--mustard-yellow);
+      padding-bottom: 0.3rem;
+      letter-spacing: 0.05em;
+      text-shadow: 1px 1px 2px rgba(255 255 255 / 0.8);
+    }
+
+    /* About and contact text */
+    #about p, #contact p {
+      font-size: 1.125rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-shadow: 0 0 3px rgba(255 255 255 / 0.85);
+    }
+
+    /* Cards with translucent background */
+    #services .card,
+    #products .card,
+    .product-slider {
+      background-color: rgba(255 255 255 / 0.9);
+      border-radius: 10px;
+    }
+    #services .card:hover,
+    #products .card:hover,
+    .product-slider .slide:hover {
+      box-shadow: 0 10px 30px rgba(123, 189, 43, 0.4);
+      transform: translateY(-8px);
+      background-color: rgba(255 255 255 / 0.95);
+    }
+    #services .card, #products .card {
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.15);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Text and icons colors remain */
+    #services .card i { color: var(--primary-green); }
+    #services h4 { color: var(--dark-green); font-weight: 700; }
+    #services p { color: #496625; }
+    #products .card-title { color: var(--dark-green); font-weight: 600; }
+    #products .card-text { color: #5b5b17; font-size: 0.9rem; }
+
+    /* Product slider */
     .product-slider {
       overflow: hidden;
       position: relative;
       padding: 2rem 0;
+      box-shadow: inset 0 5px 15px -10px rgba(123, 189, 43, 0.3);
+      border-radius: 8px;
     }
-
     .product-slider .slider-track {
       display: flex;
       align-items: center;
       gap: 1rem;
-      /* width is flexible; content duplicated for seamless loop */
-      animation: scroll-right 30s linear infinite;
+      animation: scroll-right 15s linear infinite;
     }
-
     .product-slider .slide {
       flex: 0 0 auto;
-      width: 220px; /* width of each item - adjust as needed */
+      width: 220px;
+      border-radius: 10px;
+      box-shadow: 0 8px 22px rgba(212, 175, 55, 0.3);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+      background-color: rgba(255 255 255 / 0.95);
     }
-
     .product-slider .slide img {
       width: 100%;
-      height: 140px;
+      height: 220px;
       object-fit: cover;
-      border-radius: 8px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      border-radius: 10px;
       display: block;
+      transition: transform 0.3s ease;
     }
-
-    /* pause animation on hover */
+    .product-slider .slide img:hover {
+      transform: scale(1.05);
+    }
     .product-slider .slider-track:hover {
       animation-play-state: paused;
     }
 
-    /* Move the track from -50% to 0 so visual movement is left -> right */
+    /* Contact */
+    #contact {
+   background-color: var(--light-yellow);
+   color: var(--dark-green);
+   padding: 4rem 0;
+   text-shadow: 0 0 4px rgba(255, 255, 255, 0.85);
+   border-radius: 0; /* Remove or limit radius if not boxed */
+   margin: 0;
+   max-width: none;
+   width: 100vw;
+ } 
+
+ #contact .container {
+   max-width: 100%;
+   margin: 0 auto;
+ }
+    /* #contact {
+      background-color: var(--light-yellow);
+      color: var(--dark-green);
+      padding: 4rem 0;
+      text-shadow: 0 0 4px rgba(255 255 255 / 0.85);
+      border-radius: 12px;
+      margin: 0 1rem;
+      max-width: 700px;
+    }
+    #contact a {
+      color: var(--primary-green);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    #contact a:hover {
+      color: var(--mustard-yellow);
+      text-decoration: underline;
+    } */
+
+    /* Footer */
+    footer {
+      background-color: var(--dark-green);
+      color: var(--light-yellow);
+      box-shadow: 0 -2px 10px rgba(123, 189, 43, 0.7);
+      font-weight: 600;
+      padding: 1rem 0;
+    }
+
+    /* Keyframes for slider */
     @keyframes scroll-right {
-      0% {
-        transform: translateX(-50%);
-      }
-
-      100% {
-        transform: translateX(0%);
-      }
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0%); }
     }
-
-    /* responsive adjustments */
     @media (max-width: 992px) {
-      .product-slider .slide {
-        width: 180px;
-      }
-
-      .product-slider .slide img {
-        height: 120px;
-      }
+      .product-slider .slide { width: 180px; }
+      .product-slider .slide img { height: 120px; }
     }
-
     @media (max-width: 576px) {
-      .product-slider .slide {
-        width: 140px;
-      }
-
-      .product-slider .slide img {
-        height: 90px;
-      }
+      .product-slider .slide { width: 140px; }
+      .product-slider .slide img { height: 90px; }
     }
+
+    /* ✅ New brand text style (Aagstya) */
+  .navbar .brand-text {
+    color: white !important;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+    
   </style>
 </head>
-
 <body>
   <!-- Navbar -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-  <div class="container-fluid">
-    
-    <!-- Logo on Left -->
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="images_1/Aagstya_logo.jpg" alt="Aagstya Logo" width="200" height="120" class="me-2">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center ms-3" href="#">
+  <img src="images_1/Aagstya_logo.jpg" alt="Aagstya Logo" class="logo me-2" />
     </a>
 
-    <!-- Title in Middle -->
-   <div class="position-absolute start-50 translate-middle-x">
-      <span class="fw-bold fs-1 text-white">Aagstya</span>
-    </div>
-
-    <!-- Navbar Toggle for Mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Links on Right -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
-    </div>
-
+      <!-- <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="images_1/Aagstya_logo.jpg" alt="Aagstya Logo" class="logo me-2" />
+      </a> -->
+      <div class="position-absolute start-50 translate-middle-x">
+  <span class="brand-text">Aagstya</span>
   </div>
-</nav>
-
+      <!-- <div class="position-absolute start-50 translate-middle-x">
+        <span>Aagstya</span>
+      </div> -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero Section -->
-  <header class="bg-light text-dark text-center py-5">
+  <header class="bg-light text-center py-5">
     <div class="container">
-      <h1 class="display-4 fw-bold text-primary">Your Health, Our Priority</h1>
-      <p class="lead">Agastya Medical provides trusted healthcare and innovative medical solutions.</p>
+      <h1 class="display-4 fw-bold">Precision Instruments for Scientific Excellence</h1>
+      <p class="lead">Agastya provides advanced research, analytical, and laboratory equipment for education, industry, and research institutions.</p>
       <a href="#services" class="btn btn-primary btn-lg mt-3">Explore Our Services</a>
     </div>
   </header>
@@ -135,21 +300,18 @@
   <section id="about" class="py-5">
     <div class="container text-center">
       <h2 class="text-primary">About Us</h2>
-      <p class="mt-3">
-        Agastya Medical is dedicated to providing high-quality healthcare services, advanced medical technology, 
-        and compassionate patient care. Our mission is to improve lives through innovation and expertise in the healthcare sector.
-      </p>
+      <p class="mt-3">Innovative analytical products, reliable bio solutions, and modern dental clinic furniture, empowering science and care. Agastya delivers trusted analytical solutions, bio products, and advanced dental clinic furniture to empower innovation in research and healthcare</p>
     </div>
   </section>
 
   <!-- Services Section -->
   <section id="services" class="py-5 bg-light">
     <div class="container">
-      <h2 class="text-center text-primary">Our Medical Services</h2>
+      <h2 class="text-center text-primary">Our Services</h2>
       <div class="row mt-4 g-4">
         <div class="col-md-4">
           <div class="card shadow-sm text-center p-4 h-100">
-            <i class="bi bi-hospital display-4 text-primary mb-3"></i>
+            <i class="bi bi-hospital display-4 mb-3"></i>
             <h4>Laboratory Furniture</h4>
             <p>Customized and high quality laboratory furniture tailored for precision, comfort, and durability.</p>
           </div>
@@ -157,16 +319,14 @@
         <div class="col-md-4">
           <div class="card shadow-sm text-center p-4 h-100">
             <i class="fas fa-flask-vial display-4 text-warning mb-3"></i>
-             <!-- <i class="bi bi-heart-pulse display-4 text-danger mb-3"></i>  -->
             <h4>Laboratory Chemicals for Education & Research</h4>
             <p>Trusted solutions for safe experiments and advanced research.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="card shadow-sm text-center p-4 h-100">
-            <i class="fas fa-microscope display-4 text-primary mb-3"></i> 
-            <!-- <i class="bi bi-capsule-pill display-4 text-success mb-3"></i> -->
-            <h4>Research & Analytical equipments</h4>
+            <i class="fas fa-microscope display-4 mb-3"></i>
+            <h4>Bio & Analytical equipments</h4>
             <p>Advanced equipments for scientific excellence.</p>
           </div>
         </div>
@@ -175,276 +335,253 @@
   </section>
 
   <!-- Products Section -->
-<!-- Products Section -->
-<section id="products" class="py-5">
-  <div class="container">
-    <h2 class="text-center text-primary fw-bold mb-5">Our Products</h2>
+  <section id="products" class="py-5">
+    <div class="container">
+      <h2 class="text-center text-primary fw-bold mb-5">Our Products</h2>
+      <!-- Laboratory Furniture -->
+      <div class="mb-4">
+        <h3 class="text-dark fw-bold border-start border-4 border-primary ps-3 mb-4">
+          Laboratory Furniture
+        </h3>
+      </div>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="images_1/furniture_1.jpg" class="card-img-top" alt="Furniture 1" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Workbenches</h6>
+              <p class="card-text">Durable and ergonomic lab workbenches.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=12" class="card-img-top" alt="Furniture 2" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Fume Hoods</h6>
+              <p class="card-text">Safety hoods for controlled experiments.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=13" class="card-img-top" alt="Furniture 3" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Storage Cabinets</h6>
+              <p class="card-text">Secure storage for lab essentials.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=14" class="card-img-top" alt="Furniture 4" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Seating</h6>
+              <p class="card-text">Comfortable and adjustable lab chairs.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=15" class="card-img-top" alt="Furniture 5" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Modular Systems</h6>
+              <p class="card-text">Flexible modular lab furniture solutions.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=16" class="card-img-top" alt="Furniture 6" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Other Furniture</h6>
+              <p class="card-text">Additional lab furniture options.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <!-- Laboratory Furniture -->
-    <div class="mb-4">
-      <h3 class="text-dark fw-bold border-start border-4 border-primary ps-3 mb-4">
-        Laboratory Furniture
-      </h3>
-    </div>
-    <div class="row g-4 mb-5">
-      <!-- 6 Products -->
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="images_1/furniture_1.jpg"class="card-img-top" alt="Furniture 1">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Workbenches</h6>
-            <p class="card-text">Durable and ergonomic lab workbenches.</p>
+      <!-- Laboratory Chemicals -->
+      <div class="mb-4">
+        <h3 class="text-dark fw-bold border-start border-4 border-success ps-3 mb-4">
+          Laboratory Chemicals for Education & Research
+        </h3>
+      </div>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=21" class="card-img-top" alt="Chemical 1" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Analytical Reagents</h6>
+              <p class="card-text">High-purity chemicals for testing.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=22" class="card-img-top" alt="Chemical 2" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Organic Compounds</h6>
+              <p class="card-text">Wide range for experiments & synthesis.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=23" class="card-img-top" alt="Chemical 3" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Inorganic Chemicals</h6>
+              <p class="card-text">Essential compounds for education labs.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=24" class="card-img-top" alt="Chemical 4" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Buffer Solutions</h6>
+              <p class="card-text">Prepared solutions for experiments.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=25" class="card-img-top" alt="Chemical 5" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Solvents</h6>
+              <p class="card-text">Laboratory-grade solvents for research.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="https://picsum.photos/300/200?random=26" class="card-img-top" alt="Chemical 6" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Indicators</h6>
+              <p class="card-text">Chemical indicators for titration & analysis.</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=12" class="card-img-top" alt="Furniture 2">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Fume Hoods</h6>
-            <p class="card-text">Safety hoods for controlled experiments.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=13" class="card-img-top" alt="Furniture 3">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Storage Cabinets</h6>
-            <p class="card-text">Secure storage for lab essentials.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=14" class="card-img-top" alt="Furniture 4">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Seating</h6>
-            <p class="card-text">Comfortable and adjustable lab chairs.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=15" class="card-img-top" alt="Furniture 5">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Modular Systems</h6>
-            <p class="card-text">Flexible modular lab furniture solutions.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=16" class="card-img-top" alt="Furniture 6">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Other Furniture</h6>
-            <p class="card-text">Additional lab furniture options.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Laboratory Chemicals -->
-    <div class="mb-4">
-      <h3 class="text-dark fw-bold border-start border-4 border-success ps-3 mb-4">
-        Laboratory Chemicals for Education & Research
-      </h3>
-    </div>
-    <div class="row g-4 mb-5">
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=21" class="card-img-top" alt="Chemical 1">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Analytical Reagents</h6>
-            <p class="card-text">High-purity chemicals for testing.</p>
+      <!-- Research & Analytical Equipments -->
+      <div class="mb-4">
+        <h3 class="text-dark fw-bold border-start border-4 border-warning ps-3 mb-4">Research & Analytical Equipments</h3>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="images_1/freezedryer.jpg" class="card-img-top" alt="Freeze Dryer" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Freeze Dryer</h6>
+              <p class="card-text">Preserve biological samples, chemicals, pharmaceuticals.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="images_1/organicsynthesizer.jpg" class="card-img-top" alt="Organic Synthesizer" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Organic Synthesizer</h6>
+              <p class="card-text">Automated synthesis of organic compounds for research and pharmaceuticals.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="images_1/rotaryevaporator.jpg" class="card-img-top" alt="Rotary Evaporator" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Rotary Evaporator</h6>
+              <p class="card-text">Gently remove solvents from samples under reduced pressure.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="images_1/chiller.jpg" class="card-img-top" alt="Chiller" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Chiller</h6>
+              <p class="card-text">Precise temperature control for laboratory instruments and research applications.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="images_1/ultrasonicbath.jpg" class="card-img-top" alt="Ultrasonic Bath" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Ultrasonic Bath</h6>
+              <p class="card-text">Efficient cleaning and ultrasonic-assisted processing for laboratory and research applications.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2">
+          <div class="card shadow-sm h-100">
+            <img src="images_1/incubator.jpg" class="card-img-top" alt="Incubator" />
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold">Incubators</h6>
+              <p class="card-text">Controlled environment for lab growth.</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=22" class="card-img-top" alt="Chemical 2">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Organic Compounds</h6>
-            <p class="card-text">Wide range for experiments & synthesis.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=23" class="card-img-top" alt="Chemical 3">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Inorganic Chemicals</h6>
-            <p class="card-text">Essential compounds for education labs.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=24" class="card-img-top" alt="Chemical 4">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Buffer Solutions</h6>
-            <p class="card-text">Prepared solutions for experiments.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=25" class="card-img-top" alt="Chemical 5">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Solvents</h6>
-            <p class="card-text">Laboratory-grade solvents for research.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=26" class="card-img-top" alt="Chemical 6">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Indicators</h6>
-            <p class="card-text">Chemical indicators for titration & analysis.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Research & Analytical Equipments -->
-    <div class="mb-4">
-      <h3 class="text-dark fw-bold border-start border-4 border-warning ps-3 mb-4">
-        Research & Analytical Equipments
-      </h3>
-    </div>
-    <div class="row g-4">
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=31" class="card-img-top" alt="Equipment 1">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Microscopes</h6>
-            <p class="card-text">High-precision microscopes for research.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=32" class="card-img-top" alt="Equipment 2">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Spectrometers</h6>
-            <p class="card-text">Advanced instruments for chemical analysis.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=33" class="card-img-top" alt="Equipment 3">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Centrifuges</h6>
-            <p class="card-text">Efficient separation for laboratory use.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=34" class="card-img-top" alt="Equipment 4">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Chromatography Systems</h6>
-            <p class="card-text">Accurate separation & analysis tools.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=35" class="card-img-top" alt="Equipment 5">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Balances</h6>
-            <p class="card-text">Precision weighing instruments.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-2">
-        <div class="card shadow-sm h-100">
-          <img src="https://picsum.photos/300/200?random=36" class="card-img-top" alt="Equipment 6">
-          <div class="card-body text-center">
-            <h6 class="card-title fw-bold">Incubators</h6>
-            <p class="card-text">Controlled environment for lab growth.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== continuous slideshow (images from above subsections) ===== -->
-<section id="product-slider" class="product-slider bg-light">
-  <div class="container">
-    <h2 class="text-center text-primary fw-bold mb-4">Product Gallery</h2>
-
-    <!-- slider-track contains one full set of slides, followed by a duplicate set for seamless loop -->
-    <div class="slider-track">
-      <!-- Furniture (6) -->
-      <div class="slide"><img src="images_1/furniture_1.jpg" alt="Furniture 1"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=12" alt="Furniture 2"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=13" alt="Furniture 3"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=14" alt="Furniture 4"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=15" alt="Furniture 5"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=16" alt="Furniture 6"></div>
-
-      <!-- Chemicals (6) -->
-      <div class="slide"><img src="https://picsum.photos/300/200?random=21" alt="Chemical 1"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=22" alt="Chemical 2"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=23" alt="Chemical 3"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=24" alt="Chemical 4"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=25" alt="Chemical 5"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=26" alt="Chemical 6"></div>
-
-      <!-- Equipments (6) -->
-      <div class="slide"><img src="https://picsum.photos/300/200?random=31" alt="Equipment 1"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=32" alt="Equipment 2"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=33" alt="Equipment 3"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=34" alt="Equipment 4"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=35" alt="Equipment 5"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=36" alt="Equipment 6"></div>
-
-      <!-- duplicate set for seamless looping -->
-      <div class="slide"><img src="images_1/furniture_1.jpg" alt="Furniture 1"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=12" alt="Furniture 2"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=13" alt="Furniture 3"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=14" alt="Furniture 4"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=15" alt="Furniture 5"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=16" alt="Furniture 6"></div>
-
-      <div class="slide"><img src="https://picsum.photos/300/200?random=21" alt="Chemical 1"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=22" alt="Chemical 2"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=23" alt="Chemical 3"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=24" alt="Chemical 4"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=25" alt="Chemical 5"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=26" alt="Chemical 6"></div>
-
-      <div class="slide"><img src="https://picsum.photos/300/200?random=31" alt="Equipment 1"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=32" alt="Equipment 2"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=33" alt="Equipment 3"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=34" alt="Equipment 4"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=35" alt="Equipment 5"></div>
-      <div class="slide"><img src="https://picsum.photos/300/200?random=36" alt="Equipment 6"></div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-5">
-    <div class="container text-center">
-      <h2 class="text-primary">Contact Us</h2>
-      <p class="mt-3">We are here to assist you with your healthcare needs.</p>
-      <p>📧 Email: <a href="mailto:care@aagstya.in">care@aagstya.in</a></p>
-      <p>📞 Phone: +91-9876543210</p>
-      <p>📍 Location: Gorakhpur, Uttar Pradesh, India</p>
     </div>
   </section>
 
+  <!-- Product Slider Section -->
+  <section id="product-slider" class="product-slider bg-light">
+    <div class="container">
+      <h2 class="text-center text-primary fw-bold mb-4">Product Gallery</h2>
+      <div class="slider-track">
+        <!-- Furniture -->
+        <div class="slide"><img src="images_1/furniture_1.jpg" alt="Furniture 1" /></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=12" alt="Furniture 2"></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=13" alt="Furniture 3"></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=14" alt="Furniture 4"></div>
+
+        <!-- Chemicals -->
+        <div class="slide"><img src="https://picsum.photos/300/200?random=21" alt="Chemical 1" /></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=22" alt="Chemical 2"></div>
+
+        <!-- Research & Analytical Equipments -->
+        <div class="slide"><img src="images_1/freezedryer.jpg" alt="Freeze Dryer" /></div>
+        <div class="slide"><img src="images_1/organicsynthesizer.jpg" alt="Organic Synthesizer" /></div>
+        <div class="slide"><img src="images_1/rotaryevaporator.jpg" alt="Rotary Evaporator" /></div>
+        <div class="slide"><img src="images_1/chiller.jpg" alt="Chiller" /></div>
+        <div class="slide"><img src="images_1/ultrasonicbath.jpg" alt="Ultrasonic Bath" /></div>
+        <div class="slide"><img src="images_1/incubator.jpg" alt="Incubator" /></div>
+
+        <!-- Duplicate for seamless loop -->
+        <div class="slide"><img src="images_1/furniture_1.jpg" alt="Furniture 1" /></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=12" alt="Furniture 2"></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=13" alt="Furniture 3"></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=14" alt="Furniture 4"></div>
+
+        <div class="slide"><img src="https://picsum.photos/300/200?random=21" alt="Chemical 1" /></div>
+        <div class="slide"><img src="https://picsum.photos/300/200?random=22" alt="Chemical 2"></div>
+
+        <div class="slide"><img src="images_1/freezedryer.jpg" alt="Freeze Dryer" /></div>
+        <div class="slide"><img src="images_1/organicsynthesizer.jpg" alt="Organic Synthesizer" /></div>
+        <div class="slide"><img src="images_1/rotaryevaporator.jpg" alt="Rotary Evaporator" /></div>
+        <div class="slide"><img src="images_1/chiller.jpg" alt="Chiller" /></div>
+        <div class="slide"><img src="images_1/ultrasonicbath.jpg" alt="Ultrasonic Bath" /></div>
+        <div class="slide"><img src="images_1/incubator.jpg" alt="Incubator" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+ <section id="contact" class="py-5">
+  <div class="container text-center">
+    <h2 class="text-primary">Contact Us</h2>
+    <p class="mt-3">We are here to assist you with your needs.</p>
+    <p>📧 Email: <a href="mailto:care@aagstya.in">care@aagstya.in</a></p>
+    <p>📞 Phone: +91-9876543210</p>
+    <p>📍 Location: Gorakhpur, Uttar Pradesh, India</p>
+  </div>
+</section>
+
   <!-- Footer -->
-  <footer class="bg-primary text-white text-center py-3">
+  <footer class="text-center py-3">
     <p>© 2025 AAGSTYA. All rights reserved.</p>
   </footer>
 
