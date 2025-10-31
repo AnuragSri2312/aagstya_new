@@ -1,0 +1,12 @@
+# robots.txt for Aagstya Website
+# Allow all search engines to crawl the website
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.aagstya.in/sitemap.xml
+
+# Crawl-delay (optional)
+Crawl-delay: 1
+
